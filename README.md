@@ -34,4 +34,17 @@ O método executa a alternância entre ativação/desativação do dispositivo d
 
 ------------------------------------------------------------------------------------------------------------------------
 
+- Sistema_a_Integrar.resx -
+  
+O arquivo define todas as rotas da API Sistema_a_Integrar que são utilizadas pela integração para consultar, criar e alterar
+dispositivos de rastreamento. Ele centraliza as URLs necessárias para:
+ativar/desativar dispositivos;
+buscar um dispositivo específico;
+listar todos os dispositivos;
+obter apenas dispositivos alterados recentemente;
+recuperar informações adicionais;
+criar novos dispositivos.
+
+Em essência, o arquivo funciona como um mapeamento central de endpoints, padronizando e organizando todas as URLs 
+usadas pela integração com o sistema SmartLocaliza.
 
