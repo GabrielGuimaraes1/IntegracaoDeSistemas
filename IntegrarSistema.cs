@@ -1,24 +1,24 @@
-namespace CronosERP.Service.Class.Sistema_a_Integrar
+namespace erp.Service.Class.Sistema_a_Integrar
 {
     public class IntegrarSistema_a_Integrar
     {
         public static void Executar(string cnnString)
         {
-            var cronosDAO = new CronosDAODataContext(cnnString);
+            var erpDAO = new erpDAODataContext(cnnString);
 
-            var integracoes = GeneralMethodService.GetIntegration((int)BasePage.FornecedorSoftware.Sistema_a_Integrar, cronosDAO);
+            var integracoes = GeneralMethodService.GetIntegration((int)BasePage.FornecedorSoftware.Sistema_a_Integrar, erpDAO);
 
             if (integracoes != null)
             {
                 var fornecedorIntegrado = integracoes.Item3;
 
-                var listaAssociado = AssociadoBO.GetList(null, null, cronosDAO) as List<SP_Associado_ListResult>;
+                var listaAssociado = AssociadoBO.GetList(null, null, erpDAO) as List<SP_Associado_ListResult>;
 
-                var listaVeiculo = VeiculoBO.GetList(null, null, null, null, null, null, null, null, null, cronosDAO) as List<SP_Veiculo_ListResult>;
+                var listaVeiculo = VeiculoBO.GetList(null, null, null, null, null, null, null, null, null, erpDAO) as List<SP_Veiculo_ListResult>;
 
-                var listaAgregado = AgregadoBO.GetList(null, null, null, null, cronosDAO);
+                var listaAgregado = AgregadoBO.GetList(null, null, null, null, erpDAO);
 
-                var listaEquipamento = RastreadorBO.GetList(null, null, null, null, cronosDAO) as List<SP_Rastreador_ListResult>;
+                var listaEquipamento = RastreadorBO.GetList(null, null, null, null, erpDAO) as List<SP_Rastreador_ListResult>;
 
                 var listIntegrarAssociado = integracoes.Item1.Where(x => (x.IdTipoEntidade_IntegrFornec.Equals((int)BasePage.Entidade.Associado)
                   || x.IdTipoEntidade_IntegrFornec.Equals((int)BasePage.Entidade.CentralRastreamento))).ToList();
@@ -29,15 +29,15 @@ namespace CronosERP.Service.Class.Sistema_a_Integrar
                 var listaIntegrarEquipamento = integracoes.Item2;
 
                 if (listIntegrarAssociado != null && listIntegrarAssociado.Any())
-                    Integrar(listIntegrarAssociado, listaVeiculo, listaAssociado, fornecedorIntegrado, cronosDAO);
+                    Integrar(listIntegrarAssociado, listaVeiculo, listaAssociado, fornecedorIntegrado, erpDAO);
 
                 if (listaIntegrarVeiculo != null && listaIntegrarVeiculo.Any())
-                    Integrar(listaIntegrarVeiculo, listaVeiculo, listaAssociado, fornecedorIntegrado, cronosDAO);
+                    Integrar(listaIntegrarVeiculo, listaVeiculo, listaAssociado, fornecedorIntegrado, erpDAO);
             }
         }
 
         private static void Integrar(List<SP_IntegracaoFornecedor_ListResult> listIntegrarEntidade, List<SP_Veiculo_ListResult> listaVeiculo, List<SP_Associado_ListResult> listaAssociado,
-        SP_FornecedorIntegrado_InfResult fornecedorIntegrado, CronosDAODataContext cronosDAO)
+        SP_FornecedorIntegrado_InfResult fornecedorIntegrado, erpDAODataContext erpDAO)
         {
             var fornecedorIntegradoBO = new FornecedorIntegradoBO();
             DeviceGroup deviceListSistema = Sistema_a_IntegrarBO.GetRastreadores(fornecedorIntegrado);
@@ -71,7 +71,7 @@ namespace CronosERP.Service.Class.Sistema_a_Integrar
 
                     if (veiculo.NotNull())
                     {
-                        rasVeiculo = RastreadorVeiculoBO.GetListTipada(veiculo.Id_Veiculo, null, null, fornecedorIntegrado.Id_FornecedorIntegrado, cronosDAO).FirstOrDefault();
+                        rasVeiculo = RastreadorVeiculoBO.GetListTipada(veiculo.Id_Veiculo, null, null, fornecedorIntegrado.Id_FornecedorIntegrado, erpDAO).FirstOrDefault();
                     }
 
                     if (associado != null || veiculo != null)
@@ -198,7 +198,7 @@ namespace CronosERP.Service.Class.Sistema_a_Integrar
                                         else
                                         {
                                             int id_rastreador = int.Parse(integrarEntidade.Id_Servico.ToString());
-                                            SP_Rastreador_InfResult rastreador = RastreadorBO.GetThisCadMassa(id_rastreador, null, cronosDAO);
+                                            SP_Rastreador_InfResult rastreador = RastreadorBO.GetThisCadMassa(id_rastreador, null, erpDAO);
                                             dispositivo = Dispositivo.De_ParaRastreadorVincDesvinc(rastreador, veiculo, associado, fornecedorIntegrado);
                                             if (dispositivo != null)
                                             {
@@ -456,7 +456,7 @@ namespace CronosERP.Service.Class.Sistema_a_Integrar
                         if (integrarEntidade.Status_IntegrFornec == (int)BasePage.StatusIntegrFornec.DesvinculaRastreador)
                         {
                             int id_rastreador = int.Parse(integrarEntidade.Id_Servico.ToString());
-                            SP_Rastreador_InfResult rastreador = RastreadorBO.GetThisCadMassa(id_rastreador, null, cronosDAO);
+                            SP_Rastreador_InfResult rastreador = RastreadorBO.GetThisCadMassa(id_rastreador, null, erpDAO);
                             
                             bool deviceExiste = false;
                             DeviceGroup dispositivo = Dispositivo.De_ParaRastreadorVincDesvinc(rastreador, veiculo, associado, fornecedorIntegrado);
@@ -704,15 +704,15 @@ namespace CronosERP.Service.Class.Sistema_a_Integrar
                         integrarEntidade.Status_IntegrFornec = (int)StatusIntegrFornec.Concluido;
                         integrarEntidade.DescricaoErro_IntegrFornec = mensagem.mensagem;
 
-                        FornecedorIntegradoBO.UpdateStatic(integrarEntidade, cronosDAO);
+                        FornecedorIntegradoBO.UpdateStatic(integrarEntidade, erpDAO);
                     }
                     else
                     {
-                        integrarEntidade.DescricaoErro_IntegrFornec = "Erro ao integrar - Cliente Cronos não encontrado.";
+                        integrarEntidade.DescricaoErro_IntegrFornec = "Erro ao integrar - Cliente erp não encontrado.";
                         integrarEntidade.DataIntegracao_IntegrFornec = DateTime.Now;
                         integrarEntidade.Status_IntegrFornec = (int)BasePageIntegration.StatusIntegrFornec.Concluido;
 
-                        FornecedorIntegradoBO.UpdateStatic(integrarEntidade, cronosDAO);
+                        FornecedorIntegradoBO.UpdateStatic(integrarEntidade, erpDAO);
 
                     }
                 }
@@ -722,7 +722,7 @@ namespace CronosERP.Service.Class.Sistema_a_Integrar
                     integrarEntidade.DataIntegracao_IntegrFornec = DateTime.Now;
                     integrarEntidade.Status_IntegrFornec = (int)BasePageIntegration.StatusIntegrFornec.Concluido;
 
-                    FornecedorIntegradoBO.UpdateStatic(integrarEntidade, cronosDAO);
+                    FornecedorIntegradoBO.UpdateStatic(integrarEntidade, erpDAO);
                 }
             }
         }
