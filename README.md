@@ -10,12 +10,28 @@ verificando a existência de integrações pendentes e, a partir disso, executa 
 - atualização de status;
 - transferência de veículos entre rastreadores;
 - montagem de retorno formatado para exibição no sistema.
-
+  
 O código contém métodos privados especializados para manipular listas retornadas por stored procedures, 
 validar registros, aplicar regras de negócio e enviar as atualizações ao banco. A estrutura também trata 
 erros de execução e garante que somente integrações válidas sejam processadas.
 
+-------------------------------------------------------------------------------------------------------------------------
 
+- MetodoPUT_Dispositivo -
+--> exemplo de mecanismo de método de alteração de dados em integração.
+  
+Implementa a lógica responsável por alterar o status de um dispositivo de rastreamento em um sistema externo, 
+utilizando uma chamada HTTP via RestSharp com arquivo JSON.
 
+A rotina executa:
+- Determinação do estado do dispositivo (ativo / inativo) com base na situação do veículo.
+- Construção dinâmica da URL da API do fornecedor, incluindo parâmetros como IMEI, token de autenticação e status desejado.
+- Envio de uma requisição POST para o endpoint remoto (/api/admin/device/{imei}/status).
+- Interpretação da resposta, validando sucesso a partir do conteúdo JSON retornado.
+- Retorno da resposta, indicando se a operação foi concluída com êxito.
+
+O método executa a alternância entre ativação/desativação do dispositivo de rastreamento no sistema do fornecedor via API.
+
+------------------------------------------------------------------------------------------------------------------------
 
 
