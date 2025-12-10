@@ -1,0 +1,49 @@
+namespace CronosERP.BO.Adm.Integracao.Sistema_a_Integrar
+{
+  public static ReturnDispositivo PutDeviceStatus(SP_FornecedorIntegrado_InfResult fornecedorIntegrado, SP_RastreadorVeiculo_ListResult dispositivo, SP_Veiculo_ListResult veiculo, DeviceGroup disp)
+          {
+              long? device_id = null;
+              ReturnDispositivo retorno = new ReturnDispositivo();
+              retorno.Sucesso = false;
+              DeviceGroup listaDev = Dispositivo.GetDispositivos(fornecedorIntegrado);
+              string situacao = "1";
+  
+              if (veiculo.SituacaoVeiculo == "Inativo" || veiculo.SituacaoVeiculo == "0")
+                  situacao = "0";
+              else
+                  situacao = "1";
+  
+              RestSharp.Serialization.Json.JsonDeserializer deserial = new RestSharp.Serialization.Json.JsonDeserializer();
+              RestClient client = new RestClient();
+  
+              string imei = dispositivo.IMEI_EquipamentoRastreio;
+  
+              client = new RestClient(string.Format("https://smartlocaliza.com/api/admin/device/" +imei +"/status?" +
+                  "lang=br&" +
+                  "user_api_hash=" + fornecedorIntegrado.Token_FornecedorIntegrado + " & " +
+                  "active=" + situacao + "&" +
+                  "status=" + situacao
+              ));
+              
+              var request = new RestRequest(Method.POST);
+  
+              request.RequestFormat = DataFormat.Json;
+  
+              IRestResponse response = client.Execute(request);
+  
+              if (response.IsSuccessful)
+              {
+                  if (response.Content != null)
+                  {
+                      if (response.Content.Contains("{\"status\":1"))
+                      {
+                          retorno.Sucesso = response.IsSuccessful;
+                          return retorno;
+                      }
+                  }
+              }
+              else
+                  retorno.Sucesso = false;
+              return retorno;
+          }
+}
