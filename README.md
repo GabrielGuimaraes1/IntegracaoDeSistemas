@@ -36,7 +36,7 @@ Este trecho de código faz:
 
 ## 3. Comunicação com a API Externa (Envio de Alterações)
 
-### 🔄 MetodoPUT_Dispositivo
+### MetodoPUT_Dispositivo
 
 Responsável por enviar alterações ao sistema externo. 
 
@@ -51,7 +51,7 @@ Inclui:
 
 ## 4. Definição das Rotas da API (Mapa Central)
 
-### 🌐 Sistema_a_Integrar.resx
+### Sistema_a_Integrar.resx
 
 Contém todas as rotas usadas nas requisições URL da integração:
 
@@ -66,7 +66,7 @@ Contém todas as rotas usadas nas requisições URL da integração:
 
 ## 5. Upsert Inteligente (Inserção + Correção Automática)
 
-### 🔁 TrechoDispositivo.cs
+### TrechoDispositivo.cs
 
 Trecho de código flexível que funciona tanto como criação quanto alteração:
 
@@ -79,7 +79,7 @@ Trecho de código flexível que funciona tanto como criação quanto alteração
 
 ---
 
-## ✔️ Resumo Geral das Etapas
+## Resumo Geral das Etapas
 
 | Etapa | Arquivo Responsável |
 |------|----------------------|
