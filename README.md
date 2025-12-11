@@ -1,3 +1,9 @@
+# README
+
+🌎 [Português](#português) | 🇺🇸 [English](#english)
+
+## Português
+
 *Este repositório demonstra, de forma direta e objetiva, como estruturo as principais etapas de uma integração entre sistemas,
 exemplificando tais etapas com trechos de códigos relacionados a implementação da integração.*
 
@@ -91,4 +97,105 @@ Trecho de código flexível que funciona tanto como criação quanto alteração
 
 ---
 
-*Este repositório não representa um projeto completo — seu objetivo é apenas ilustrar de forma simples como estruturo integrações e organizo cada etapa do processo.*  
+*Este repositório não representa um projeto completo — seu objetivo é apenas ilustrar de forma simples como estruturo 
+integrações e organizo cada etapa do processo.*  
+
+---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   
+
+## English
+
+*This repository demonstrates, in a direct and objective way, how I structure the main stages of a system-to-system integration, 
+illustrating these stages with code excerpts related to the implementation of the integration.*
+
+---
+
+## 1. Data Structure Modeling (Input Stage)
+
+### Dispositivo.cs
+
+Defines several classes used to represent the data returned by the external API.  
+Here, JSON models (using Newtonsoft) are mapped, such as:
+
+- **DeviceGroup** – device grouping  
+- **Device** – basic properties of a specific device  
+- **Item** – conditions, status, alarms  
+- **DeviceData** – complete device model (with all attributes)
+
+---
+
+## 2. Integration Execution (Processing and Business Rules)
+
+### IntegrarSistema.cs
+
+Coordinates the entire integration flow.  
+This code excerpt performs:
+
+- reading of internal pending items  
+- integration of members and vehicles  
+- status updates  
+- tracker-to-tracker transfers  
+- record validation  
+- execution of stored procedures  
+- error handling and assembly of the final result  
+
+---
+
+## 3. Communication with the External API (Sending Updates)
+
+### MetodoPUT_Dispositivo
+
+Responsible for sending updates to the external system.
+
+Includes:
+
+- defining the device status (active/inactive)  
+- building the URL using IMEI, token, and parameters  
+- sending a POST/PUT request using RestSharp  
+- validating the JSON response  
+
+---
+
+## 4. API Route Definitions (Central Mapping)
+
+### Sistema_a_Integrar.resx
+
+Contains all API routes used by the integration:
+
+- activation/deactivation  
+- device search  
+- full device listing  
+- listing of recently modified devices  
+- device creation  
+- auxiliary routes  
+
+---
+
+## 5. Smart Upsert (Insert + Automatic Correction)
+
+### TrechoDispositivo.cs
+
+A flexible piece of code that works for both creation and update:
+
+- completes device information when it already exists internally  
+- corrects outdated or inconsistent information  
+- fetches data from the external API when necessary  
+- converts and organizes data into the format expected by the API  
+
+This is where alignment between systems happens, ensuring consistency even when the external API has limitations.
+
+---
+
+## Summary of Stages
+
+| Stage | Responsible File |
+|------|-------------------|
+| Data structure modeling | `Dispositivo.cs` |
+| Main integration processing | `IntegrarSistema.cs` |
+| Sending updates to the provider | `MetodoPUT_Dispositivo` |
+| Centralization of API routes | `Sistema_a_Integrar.resx` |
+| Smart insert/update (upsert) | `TrechoDispositivo.cs` |
+
+---
+
+*This repository is not a complete project — its purpose is simply to illustrate how I structure system integrations and organize each stage of the process.*  
+
