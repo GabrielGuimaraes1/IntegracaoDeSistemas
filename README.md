@@ -1,3 +1,6 @@
+**Este repositório não é um projeto completo e tem o objetivo de exemplificar de forma sucinta a forma como implemento minhas integrações.**
+
+
 - IntegrarSistema.cs
 
 IntegrarSistema.cs implementa a rotina responsável por integrar os dados do fornecedor "Sistema_a_Integrar"
