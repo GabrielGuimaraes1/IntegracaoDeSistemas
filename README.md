@@ -48,3 +48,38 @@ criar novos dispositivos.
 Em essência, o arquivo funciona como um mapeamento central de endpoints, padronizando e organizando todas as URLs 
 usadas pela integração com o sistema SmartLocaliza.
 
+------------------------------------------------------------------------------------------------------------------------
+
+- Dispositivo.cs
+
+Referente a trecho de um código onde está um conjunto de classes em C#, usados pasa desserializar e representar as 
+estruturas de dados retornadas pela API.
+
+As classes são totalmente baseadas em JSON e utilizam atributos do JsonProperty (Newtonsoft.Json) para mapear cada campo 
+recebido da API. Ele contém:
+- DeviceGroup – estrutura raiz que agrupa uma lista de dispositivos.
+- Device – representa um dispositivo e suas propriedades básicas.
+- Item – representa os itens associados a um dispositivo (condições, alarmes, status e dados adicionais).
+- DeviceData – modelo completo com todas as informações detalhadas do dispositivo, incluindo IMEI, placa, status, dados técnicos,
+configurações, metadados e informações de relacionamento.
+
+Este arquivo serve como base de tipagem para a integração, permitindo:
+leitura estruturada das respostas da API;
+acesso seguro às propriedades;
+manipulação clara dos dados recebidos pelo sistema externo.
+
+Em resumo, o arquivo "conta" para nosso sistema como as entidades do JSON retornado pela API são estruturadas, garantindo integração 
+tipada, organizada e confiável.
+
+
+
+
+
+
+
+
+
+
+
+
+
