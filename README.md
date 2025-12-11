@@ -1,4 +1,4 @@
-- IntegrarSistema.cs -
+- IntegrarSistema.cs
 
 IntegrarSistema.cs implementa a rotina responsável por integrar os dados do fornecedor "Sistema_a_Integrar"
 ao nosso sistema ERP interno. A classe centraliza todo o fluxo de execução da integração desde a obtenção 
@@ -17,7 +17,7 @@ erros de execução e garante que somente integrações válidas sejam processad
 
 -------------------------------------------------------------------------------------------------------------------------
 
-- MetodoPUT_Dispositivo -
+- MetodoPUT_Dispositivo
 --> exemplo de mecanismo de método de alteração de dados em integração.
   
 Implementa a lógica responsável por alterar o status de um dispositivo de rastreamento em um sistema externo, 
@@ -34,7 +34,7 @@ O método executa a alternância entre ativação/desativação do dispositivo d
 
 ------------------------------------------------------------------------------------------------------------------------
 
-- Sistema_a_Integrar.resx -
+- Sistema_a_Integrar.resx
   
 O arquivo define todas as rotas da API Sistema_a_Integrar que são utilizadas pela integração para consultar, criar e alterar
 dispositivos de rastreamento. Ele centraliza as URLs necessárias para:
@@ -46,7 +46,7 @@ recuperar informações adicionais;
 criar novos dispositivos.
 
 Em essência, o arquivo funciona como um mapeamento central de endpoints, padronizando e organizando todas as URLs 
-usadas pela integração com o sistema SmartLocaliza.
+usadas pela integração com o sistema externo.
 
 ------------------------------------------------------------------------------------------------------------------------
 
@@ -71,7 +71,20 @@ manipulação clara dos dados recebidos pelo sistema externo.
 Em resumo, o arquivo "conta" para nosso sistema como as entidades do JSON retornado pela API são estruturadas, garantindo integração 
 tipada, organizada e confiável.
 
+------------------------------------------------------------------------------------------------------------------------
 
+- TrechoDispositivo.cs
+
+Este é o exemplo de um techo de código inteligente e econômico por sua versatilidade. Sua implementação possibilita que possa ser 
+usado quando haja a intenção de inserir um novo objeto ou apenas editá-lo, ou seja, age tanto como POST quanto como PUT. Isso assegura 
+que toda informação do sistema interno sempre esteja de acordo com o sistema externo. Esse tipo de implementação também pode 
+se mostrar necessário em sistemas com estruturas e/ou documentações limitadas, quando não há a possibilidade de uso do método PUT.
+
+Quando o rastreador existe, ele cria o dispositivo com todas as informações completas. Quando não existe, ele tenta buscar os 
+dados do dispositivo diretamente na API externa para complementar ou corrigir as informações antes de devolver.
+
+Em resumo, ele converte e organiza os dados do sistema interno para o formato da API e, quando necessário, 
+busca informações externas para montar o dispositivo corretamente. É a blindagem perfeita.
 
 
 
