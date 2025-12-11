@@ -1,4 +1,5 @@
-**Este repositório não é um projeto completo e tem o objetivo de exemplificar de forma sucinta a forma como implemento minhas integrações.**
+* Este repositório não é um projeto completo e tem o objetivo de exemplificar de forma sucinta a forma como implemento minhas integrações,
+  descrevendo arquivos. Se houver alguma dúvida, não hesite em me chamar!
 
 
 - Dispositivo.cs
