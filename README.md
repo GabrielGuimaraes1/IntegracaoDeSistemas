@@ -1,7 +1,7 @@
 - IntegrarSistema.cs
 
 IntegrarSistema.cs implementa a rotina responsável por integrar os dados do fornecedor "Sistema_a_Integrar"
-ao nosso sistema ERP interno. A classe centraliza todo o fluxo de execução da integração desde a obtenção 
+ao nosso sistema interno. A classe centraliza todo o fluxo de execução da integração desde a obtenção 
 das pendências até o processamento detalhado de cada registro. Ela inicia carregando o contexto de dados e 
 verificando a existência de integrações pendentes e, a partir disso, executa operações como:
 
