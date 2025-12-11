@@ -13,7 +13,8 @@ verificando a existência de integrações pendentes e, a partir disso, executa 
   
 O código contém métodos privados especializados para manipular listas retornadas por stored procedures, 
 validar registros, aplicar regras de negócio e enviar as atualizações ao banco. A estrutura também trata 
-erros de execução e garante que somente integrações válidas sejam processadas.
+erros de execução e garante que somente integrações válidas sejam processadas. É o código principal da integração, 
+o qual interliga todas as outras camadas desse processo minucioso.
 
 -------------------------------------------------------------------------------------------------------------------------
 
